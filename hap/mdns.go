@@ -63,7 +63,8 @@ func (s *MDNSService) Publish() error {
 	hostname, _ := os.Hostname()
 	host := fmt.Sprintf("%s.", strings.Trim(hostname, "."))
 	text := s.txtRecords()
-	server, err := bonjour.RegisterProxy(s.name, "_hap._tcp.", "", s.port, host, ip.String(), text, nil)
+	name := strings.Replace(s.name, " ", "-", -1)
+	server, err := bonjour.RegisterProxy(name, "_hap._tcp.", "", s.port, host, ip.String(), text, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
